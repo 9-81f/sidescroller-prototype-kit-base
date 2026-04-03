@@ -23,6 +23,11 @@ func physics_process(delta: float) -> void:
 		if player.slide_input():
 			set_state.emit(EntityEnums.STATE.SLIDE, self)
 			return
+		if player.crouch_input():
+			set_state.emit(EntityEnums.STATE.CROUCH_IDLE, self)
+			return
 		if player.jump_input():
 			set_state.emit(EntityEnums.STATE.JUMP, self)
 			return
+	else:
+		set_state.emit(EntityEnums.STATE.FALL, self)

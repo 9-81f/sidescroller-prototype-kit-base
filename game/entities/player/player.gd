@@ -26,7 +26,7 @@ func crouch_input() -> bool:
 	return Input.is_action_just_pressed("ui_down") and movement.settings.can_crouch
 	
 func slide_input() -> bool:
-	return Input.is_action_just_pressed("ui_down") and movement.settings.can_jump
+	return Input.is_action_just_pressed("ui_down") and movement.settings.can_slide
 	
 func freeze() -> void:
 	is_freezed = true
@@ -60,8 +60,6 @@ func _ready() -> void:
 		
 func _physics_process(_delta: float) -> void:
 	if is_freezed: return
-	if !is_on_floor():
-		fsm.transition_state(EntityEnums.STATE.FALL)
 	move_and_slide()
 	
 func _on_facing(direction: EntityEnums.FACING) -> void:

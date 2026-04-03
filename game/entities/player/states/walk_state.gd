@@ -26,4 +26,6 @@ func physics_process(delta: float) -> void:
 		if player.jump_input():
 			set_state.emit(EntityEnums.STATE.JUMP, self)
 			return
+	else:
+		set_state.emit(EntityEnums.STATE.FALL, self)
 	

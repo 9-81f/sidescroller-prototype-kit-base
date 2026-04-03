@@ -22,14 +22,17 @@ func physics_process(delta: float) -> void:
 	var time_left_ratio := 1.0 - (_slide_timer / player.movement.settings.slide_duration)
 	player.velocity.x = _slide_direction * player.movement.settings.slide_force * time_left_ratio
 	
-	if player.is_on_wall():
-		player.movement.kill_velocity_x()
-		set_state.emit(EntityEnums.STATE.SLIDE_RECOVERY)
-		return
-		
-	if _slide_timer >= player.movement.settings.slide_duration:
-		player.movement.kill_velocity_x()
-		set_state.emit(EntityEnums.STATE.SLIDE_RECOVERY)
+	if player.is_on_floor():
+		if player.is_on_wall():
+			player.movement.kill_velocity_x()
+			set_state.emit(EntityEnums.STATE.SLIDE_RECOVERY)
+			return
+			
+		if _slide_timer >= player.movement.settings.slide_duration:
+			player.movement.kill_velocity_x()
+			set_state.emit(EntityEnums.STATE.SLIDE_RECOVERY)
+	else:
+		set_state.emit(EntityEnums.STATE.FALL, self)
 
 func exit() -> void:
 	player.movement.kill_velocity_x()

@@ -27,8 +27,16 @@ func kill_velocity_x() -> void:
 func get_next_velocity(current_velocity: Vector2, target_x: float, delta: float) -> Vector2:
 	var out := current_velocity
 	
-	var accel = settings.acceleration if target_x != 0.0 else settings.friction
-	out.x = move_toward(out.x, target_x, accel * delta)
+	var applied_accel: float = 0.0
+	var x_accel := settings.acceleration if target_x != 0.0 else settings.friction
+	var y_accel := settings.air_acceleration if target_x != 0.0 else settings.air_friction
+	
+	if body.is_on_floor():
+		applied_accel = x_accel
+	else:
+		applied_accel = y_accel
+	
+	out.x = move_toward(out.x, target_x, applied_accel * delta)
 	
 	if not body.is_on_floor():
 		out.y += settings.gravity * delta

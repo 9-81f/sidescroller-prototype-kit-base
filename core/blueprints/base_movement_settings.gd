@@ -9,6 +9,8 @@ class_name BaseMovementSettings extends Resource
 @export_group("Vertical Movement")
 @export_range(-1000.0, 0.0) var jump_velocity := -45.0
 @export var max_fall_speed := 800.0
+@export_range(100.0, 5000.0) var air_acceleration := 2500.0
+@export_range(100.0, 5000.0) var air_friction := 200.0
 @export_range(1, 20) var gravity_multiplier: int
 
 @export_group("Abilities")
