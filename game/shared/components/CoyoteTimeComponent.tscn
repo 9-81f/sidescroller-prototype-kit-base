@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://dwlufj3f3vqdb"]
+
+[node name="CoyoteTimeComponent" type="Timer"]
+one_shot = true
