@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BaseLevelTransporter" load_steps=2 format=3 uid="uid://dgh74pyldnbm0"]
+
+[ext_resource type="Script" uid="uid://dx5pph8a6od8f" path="res://core/blueprints/base_level_transporter.gd" id="1_035fp"]
+
+[resource]
+script = ExtResource("1_035fp")
+target_level = null
+spawn_marker_id = &"EastEntry01"
+metadata/_custom_type_script = "uid://dx5pph8a6od8f"

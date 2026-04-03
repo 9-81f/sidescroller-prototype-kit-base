@@ -1,0 +1,45 @@
+class_name MovementComponent extends BaseNode2DComponent
+
+signal facing(direction: EntityEnums.FACING)
+
+var body: CharacterBody2D
+@export var settings: BaseMovementSettings
+@export var default_facing: EntityEnums.FACING = EntityEnums.FACING.RIGHT
+
+var last_facing: EntityEnums.FACING
+
+func _ready() -> void:
+	assert(entity != null, "Movement Component: Entity not found!")
+	if entity is CharacterBody2D:
+		body = entity
+	else:
+		push_error("Movement Component: Entity must be of type CharacterBody2D!")
+	
+	if default_facing:
+		last_facing = default_facing
+		
+func stop() -> void:
+	body.velocity = Vector2.ZERO
+
+func kill_velocity_x() -> void:
+	body.velocity.x = 0.0
+		
+func get_next_velocity(current_velocity: Vector2, target_x: float, delta: float) -> Vector2:
+	var out := current_velocity
+	
+	var accel = settings.acceleration if target_x != 0.0 else settings.friction
+	out.x = move_toward(out.x, target_x, accel * delta)
+	
+	if not body.is_on_floor():
+		out.y += settings.gravity * delta
+		out.y = min(out.y, settings.max_fall_speed)
+	
+	return out
+		
+func set_facing_direction(move_dir: float) -> void:
+	if move_dir > 0:
+		last_facing = EntityEnums.FACING.RIGHT
+		facing.emit(last_facing)
+	elif move_dir < 0:
+		last_facing = EntityEnums.FACING.LEFT
+		facing.emit(last_facing)

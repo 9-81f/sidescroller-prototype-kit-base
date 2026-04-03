@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ui2inal3s3s8"]
+
+[ext_resource type="Script" uid="uid://bpwu01me83imh" path="res://game/shared/components/scripts/state_machine_component.gd" id="1_ftmpv"]
+
+[node name="StateMachineComponent" type="Node"]
+script = ExtResource("1_ftmpv")

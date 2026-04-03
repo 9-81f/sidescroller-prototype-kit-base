@@ -1,0 +1,19 @@
+class_name EntityEnums
+
+enum STATE {
+	IDLE,
+	WALK,
+	RUN,
+	JUMP,
+	FALL,
+	CROUCH_IDLE,
+	CROUCH_WALK,
+	SLIDE,
+	SLIDE_RECOVERY,
+	FREEZED
+}
+
+enum FACING {
+	LEFT,
+	RIGHT
+}

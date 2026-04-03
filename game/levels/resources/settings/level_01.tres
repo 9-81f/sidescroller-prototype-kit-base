@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BaseLevelSettings" load_steps=2 format=3 uid="uid://ejeqj5u67lcx"]
+
+[ext_resource type="Script" uid="uid://dy8gkhelb2g26" path="res://core/blueprints/base_level_settings.gd" id="1_a8ny5"]
+
+[resource]
+script = ExtResource("1_a8ny5")
+right_bottom_bounds = Vector2(688, 288)
+metadata/_custom_type_script = "uid://dy8gkhelb2g26"
