@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://3ki3w2amel8k"]
+[gd_scene load_steps=38 format=3 uid="uid://3ki3w2amel8k"]
 
 [ext_resource type="Script" uid="uid://crlmtf34x0icm" path="res://game/entities/player/player.gd" id="1_83uri"]
 [ext_resource type="PackedScene" uid="uid://cigj4m4j3hllx" path="res://game/shared/components/VisualComponent.tscn" id="2_mvapb"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://ckxcsmkhfh8ka" path="res://assets/placeholders/spritesheet/humanoid_male/hmnd_ph32_slide_recovery.png" id="11_31ivg"]
 [ext_resource type="PackedScene" uid="uid://b8l3eqv8fm47f" path="res://game/shared/components/MovementComponent.tscn" id="12_m48q3"]
 [ext_resource type="Resource" uid="uid://crn31vsnt4j" path="res://game/entities/player/resources/PlayerMovementSettings.tres" id="13_f1mrx"]
+[ext_resource type="PackedScene" uid="uid://cf7k6vjfvmlps" path="res://game/shared/components/CoyoteTimeComponent.tscn" id="14_ir7ey"]
 [ext_resource type="Script" uid="uid://cdnr6t68a6l00" path="res://game/entities/player/states/walk_state.gd" id="15_ltmxc"]
 [ext_resource type="Script" uid="uid://cc3ae4lr0fra0" path="res://game/entities/player/states/idle_state.gd" id="15_m48q3"]
 [ext_resource type="Script" uid="uid://b8ey1ghk133g0" path="res://game/entities/player/states/run_state.gd" id="16_ltmxc"]
@@ -806,7 +807,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ewxs"]
 size = Vector2(7, 5)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["actor"]]
 floor_constant_speed = true
 floor_snap_length = 1.5
 script = ExtResource("1_83uri")
@@ -831,6 +832,10 @@ unique_name_in_owner = true
 settings = ExtResource("13_f1mrx")
 entity = NodePath("..")
 
+[node name="CoyoteTimeComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("14_ir7ey")]
+unique_name_in_owner = true
+entity = NodePath("..")
+
 [node name="PlayerStateMachineComponent" parent="." node_paths=PackedStringArray("_default_state", "entity") instance=ExtResource("3_deat1")]
 unique_name_in_owner = true
 _default_state = NodePath("IdleState")
@@ -841,36 +846,36 @@ script = ExtResource("15_m48q3")
 
 [node name="WalkState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("15_ltmxc")
-type = 1
+key = 1
 
 [node name="RunState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("16_ltmxc")
-type = 2
+key = 2
 
 [node name="CrouchIdleState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("17_ofney")
-type = 5
+key = 5
 
 [node name="CrouchWalkState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("18_tmfp6")
-type = 6
+key = 6
 
 [node name="JumpState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("19_j4f6m")
-type = 3
+key = 3
 
 [node name="FallState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("21_eupf2")
-type = 4
+key = 4
 
 [node name="SlideState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("22_hmim6")
-type = 7
+key = 7
 
 [node name="SlideRecoveryState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("23_tdtf4")
-type = 8
+key = 8
 
 [node name="FreezedState" type="Node" parent="PlayerStateMachineComponent"]
 script = ExtResource("24_1fvfj")
-type = 9
+key = 9

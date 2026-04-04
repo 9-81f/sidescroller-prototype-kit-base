@@ -1,6 +1,6 @@
 class_name MainCamera extends Camera2D
 
-@export var follow_target: Node2D
+@export var follow_target: CharacterBody2D
 var current_level: BaseLevel
 
 @export_category("Lookahead Settings")
@@ -49,8 +49,13 @@ func _physics_process(delta: float) -> void:
 		var is_running = follow_target.fsm.current_state is PlayerRunState if follow_target.get("fsm") else false
 		var multiplier = 2.0 if is_running else 1.0
 		desired_target.x += move_dir * (lookahead.x * multiplier)
+	
+	# Vertical lookahead
+	var y_velocity := follow_target.velocity.y
+	if absf(y_velocity) > 10.0:
+		desired_target.y += (y_velocity / 100) * lookahead.y
 
-	# 3. Viewport Constraints (The "Safety" Check)
+	# 3. Viewport Constraints
 	var view_size = get_viewport_rect().size / zoom
 	var half_view = view_size / 2.0
 	
@@ -64,6 +69,6 @@ func _physics_process(delta: float) -> void:
 	desired_target.x = clamp(desired_target.x, min_x, max_x)
 	desired_target.y = clamp(desired_target.y, min_y, max_y)
 
-	# 4. Smooth Follow (Vector lerp is cleaner)
+	# Smooth Follow
 	global_position.x = lerp(global_position.x, desired_target.x, lookahead_speed.x * delta)
 	global_position.y = lerp(global_position.y, desired_target.y, lookahead_speed.y * delta)

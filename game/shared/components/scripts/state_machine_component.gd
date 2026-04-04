@@ -22,7 +22,7 @@ func _ready() -> void:
 		for state in get_children():
 			if state is BaseState:
 				state.set_state.connect(_on_set_state)
-				_states[state.type] = state
+				_states[state.key] = state
 	else:
 		push_error("Min. 1 child state node under StateMachine")
 
