@@ -3,6 +3,8 @@ class_name Player extends CharacterBody2D
 #COMPONENTS
 @onready var fsm: StateMachineComponent = %PlayerStateMachineComponent
 @onready var movement: MovementComponent = %PlayerMovementComponent
+@onready var coyote_timer: CoyoteTimeComponent = %CoyoteTimeComponent
+
 var is_freezed: bool = false
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
@@ -17,16 +19,31 @@ func stand_input() -> float:
 	return Input.is_action_just_pressed("ui_up")
 	
 func run_input(is_released: bool = false) -> bool:
-	return (Input.is_action_pressed("shift") if !is_released else Input.is_action_just_released("shift")) and movement.settings.can_run
-	
-func jump_input() -> bool:
-	return Input.is_action_just_pressed("ui_up") and movement.settings.can_jump
+	if movement:
+		return (Input.is_action_pressed("shift") if !is_released else Input.is_action_just_released("shift")) and movement.settings.can_run
+	return (Input.is_action_pressed("shift") if !is_released else Input.is_action_just_released("shift"))
 
+func jump_input() -> bool:
+	if movement:
+		return Input.is_action_just_pressed("ui_up") and movement.settings.can_jump
+	return Input.is_action_just_pressed("ui_up")
+	
+func coyote_jump_input() -> bool:
+	if coyote_timer:
+		return jump_input() and coyote_timer.allow_jump()
+	else:
+		push_error("Player -> CoyoteTimeComponent: CoyoteTimeComponent must exist to use coyote_jump_input method!")
+		return false
+		
 func crouch_input() -> bool:
-	return Input.is_action_just_pressed("ui_down") and movement.settings.can_crouch
+	if movement:
+		return Input.is_action_just_pressed("ui_down") and movement.settings.can_crouch
+	return Input.is_action_just_pressed("ui_down")
 	
 func slide_input() -> bool:
-	return Input.is_action_just_pressed("ui_down") and movement.settings.can_slide
+	if movement:
+		return Input.is_action_just_pressed("ui_down") and movement.settings.can_slide
+	return Input.is_action_just_pressed("ui_down")
 	
 func freeze() -> void:
 	is_freezed = true

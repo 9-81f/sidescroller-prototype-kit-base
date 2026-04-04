@@ -3,7 +3,7 @@ class_name BaseState extends Node
 
 signal set_state(to_state: EntityEnums.STATE, previous_state: BaseState)
 
-@export var type: EntityEnums.STATE = EntityEnums.STATE.IDLE
+@export var key: EntityEnums.STATE = EntityEnums.STATE.IDLE
 
 var fsm: StateMachineComponent = null
 

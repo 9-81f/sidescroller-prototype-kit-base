@@ -1,4 +1,10 @@
-[gd_scene format=3 uid="uid://dwlufj3f3vqdb"]
+[gd_scene load_steps=2 format=3 uid="uid://cf7k6vjfvmlps"]
 
-[node name="CoyoteTimeComponent" type="Timer"]
+[ext_resource type="Script" uid="uid://busiimht82pqg" path="res://game/shared/components/scripts/coyote_time_component.gd" id="1_rja6u"]
+
+[node name="CoyoteTimeComponent" type="Node"]
+script = ExtResource("1_rja6u")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
 one_shot = true

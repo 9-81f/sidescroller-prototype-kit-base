@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_035fp")
-target_level = null
+target_level = "uid://t5f3ymyaf2cr"
 spawn_marker_id = &"EastEntry01"
 metadata/_custom_type_script = "uid://dx5pph8a6od8f"
