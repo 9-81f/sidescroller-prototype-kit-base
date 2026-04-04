@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://3ki3w2amel8k"]
+[gd_scene load_steps=39 format=3 uid="uid://3ki3w2amel8k"]
 
 [ext_resource type="Script" uid="uid://crlmtf34x0icm" path="res://game/entities/player/player.gd" id="1_83uri"]
 [ext_resource type="PackedScene" uid="uid://cigj4m4j3hllx" path="res://game/shared/components/VisualComponent.tscn" id="2_mvapb"]
@@ -14,9 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://ckxcsmkhfh8ka" path="res://assets/placeholders/spritesheet/humanoid_male/hmnd_ph32_slide_recovery.png" id="11_31ivg"]
 [ext_resource type="PackedScene" uid="uid://b8l3eqv8fm47f" path="res://game/shared/components/MovementComponent.tscn" id="12_m48q3"]
 [ext_resource type="Resource" uid="uid://crn31vsnt4j" path="res://game/entities/player/resources/PlayerMovementSettings.tres" id="13_f1mrx"]
-[ext_resource type="PackedScene" uid="uid://cf7k6vjfvmlps" path="res://game/shared/components/CoyoteTimeComponent.tscn" id="14_ir7ey"]
+[ext_resource type="PackedScene" uid="uid://dwlufj3f3vqdb" path="res://game/shared/components/CoyoteTimeComponent.tscn" id="14_ir7ey"]
 [ext_resource type="Script" uid="uid://cdnr6t68a6l00" path="res://game/entities/player/states/walk_state.gd" id="15_ltmxc"]
 [ext_resource type="Script" uid="uid://cc3ae4lr0fra0" path="res://game/entities/player/states/idle_state.gd" id="15_m48q3"]
+[ext_resource type="PackedScene" uid="uid://csypr0ab1tone" path="res://game/shared/components/JumpBufferComponent.tscn" id="15_m4817"]
 [ext_resource type="Script" uid="uid://b8ey1ghk133g0" path="res://game/entities/player/states/run_state.gd" id="16_ltmxc"]
 [ext_resource type="Script" uid="uid://1s0mt4k2f2ge" path="res://game/entities/player/states/crouch_idle_state.gd" id="17_ofney"]
 [ext_resource type="Script" uid="uid://coxybif6ruaaa" path="res://game/entities/player/states/crouch_walk_state.gd" id="18_tmfp6"]
@@ -807,10 +808,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ewxs"]
 size = Vector2(7, 5)
 
-[node name="Player" type="CharacterBody2D" groups=["actor"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement", "fsm", "coyote_timer", "jump_buffer") groups=["actor"]]
 floor_constant_speed = true
 floor_snap_length = 1.5
 script = ExtResource("1_83uri")
+movement = NodePath("MovementComponent")
+fsm = NodePath("PlayerStateMachineComponent")
+coyote_timer = NodePath("CoyoteTimeComponent")
+jump_buffer = NodePath("JumpBufferComponent")
 
 [node name="VisualComponent" parent="." instance=ExtResource("2_mvapb")]
 
@@ -827,17 +832,17 @@ libraries = {
 position = Vector2(-0.5, -12.5)
 shape = SubResource("RectangleShape2D_4ewxs")
 
-[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("12_m48q3")]
-unique_name_in_owner = true
+[node name="CoyoteTimeComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("14_ir7ey")]
+entity = NodePath("..")
+
+[node name="JumpBufferComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("15_m4817")]
+entity = NodePath("..")
+
+[node name="MovementComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("12_m48q3")]
 settings = ExtResource("13_f1mrx")
 entity = NodePath("..")
 
-[node name="CoyoteTimeComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("14_ir7ey")]
-unique_name_in_owner = true
-entity = NodePath("..")
-
 [node name="PlayerStateMachineComponent" parent="." node_paths=PackedStringArray("_default_state", "entity") instance=ExtResource("3_deat1")]
-unique_name_in_owner = true
 _default_state = NodePath("IdleState")
 entity = NodePath("..")
 

@@ -24,12 +24,17 @@ func physics_process(delta: float) -> void:
 	player.velocity = player.movement.get_next_velocity(player.velocity, applied_speed, delta)
 	player.movement.set_facing_direction(move_dir)
 
-	if player.coyote_jump_input():
-		player.coyote_timer.stop()
-		set_state.emit(EntityEnums.STATE.JUMP, self)
+	if player.jump_input():
+		if player.use_coyote_timer():
+			set_state.emit(EntityEnums.STATE.JUMP, self)
+		else:
+			player.use_jump_buffer()
 	
 	if player.is_on_floor():
-		if move_dir != 0:
+		if player.jump_buffer and player.jump_buffer.is_buffered(): 
+			player.jump_buffer.stop()
+			set_state.emit(EntityEnums.STATE.JUMP, self)
+		elif move_dir != 0:
 			set_state.emit(EntityEnums.STATE.WALK, self)
 		else:
 			set_state.emit(EntityEnums.STATE.IDLE, self)
