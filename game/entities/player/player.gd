@@ -1,9 +1,17 @@
 class_name Player extends CharacterBody2D
 
 #COMPONENTS
-@onready var fsm: StateMachineComponent = %PlayerStateMachineComponent
-@onready var movement: MovementComponent = %PlayerMovementComponent
-@onready var coyote_timer: CoyoteTimeComponent = %CoyoteTimeComponent
+@export_category("Required Components")
+## Enable player movement
+@export var movement: MovementComponent
+## Finite State Machine
+@export var fsm: StateMachineComponent
+
+@export_category("Optional Components")
+## Add coyote time for jump movement
+@export var coyote_timer: CoyoteTimeComponent
+## Add jump buffer for jump movement
+@export var jump_buffer: JumpBufferComponent
 
 var is_freezed: bool = false
 
@@ -12,6 +20,16 @@ var is_freezed: bool = false
 @onready var sprite: Sprite2D = $VisualComponent/Sprite2D
 
 ## PUBLIC METHODS
+func use_coyote_timer() -> bool:
+	if coyote_timer and coyote_timer.allow_jump():
+		coyote_timer.stop()
+		return true
+	return false
+
+func use_jump_buffer() -> void:
+	if jump_buffer:
+		jump_buffer.start()
+
 func get_direction() -> float:
 	return Input.get_axis("ui_left", "ui_right")
 
@@ -27,13 +45,6 @@ func jump_input() -> bool:
 	if movement:
 		return Input.is_action_just_pressed("ui_up") and movement.settings.can_jump
 	return Input.is_action_just_pressed("ui_up")
-	
-func coyote_jump_input() -> bool:
-	if coyote_timer:
-		return jump_input() and coyote_timer.allow_jump()
-	else:
-		push_error("Player -> CoyoteTimeComponent: CoyoteTimeComponent must exist to use coyote_jump_input method!")
-		return false
 		
 func crouch_input() -> bool:
 	if movement:
