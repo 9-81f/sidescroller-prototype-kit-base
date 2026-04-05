@@ -3,6 +3,10 @@ class_name PlayerSlideState extends PlayerState
 var _slide_timer := 0.0
 var _slide_direction: float
 
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.SLIDE)
+	super._ready()
+
 func enter() -> void:
 	if not player: return
 	

@@ -1,5 +1,9 @@
 class_name PlayerIdleState extends PlayerState
 
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.IDLE)
+	super._ready()
+
 func enter() -> void:
 	player.movement.stop()
 	player.play_animation(EntityEnums.STATE.IDLE)

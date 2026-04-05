@@ -24,7 +24,7 @@ func stop() -> void:
 func kill_velocity_x() -> void:
 	body.velocity.x = 0.0
 		
-func get_next_velocity(current_velocity: Vector2, target_x: float, delta: float) -> Vector2:
+func get_next_velocity(current_velocity: Vector2, target_x: float, delta: float, is_jumping: bool = false, is_jump_cancelled: bool = false) -> Vector2:
 	var out := current_velocity
 	
 	var applied_accel: float = 0.0
@@ -38,8 +38,13 @@ func get_next_velocity(current_velocity: Vector2, target_x: float, delta: float)
 	
 	out.x = move_toward(out.x, target_x, applied_accel * delta)
 	
+	var applied_gravity := settings.gravity
+	
+	if settings.can_variable_jump_height and is_jumping and is_jump_cancelled and out.y < 0.0:
+		applied_gravity *= settings.mid_jump_cancel_weight
+	
 	if not body.is_on_floor():
-		out.y += settings.gravity * delta
+		out.y += applied_gravity * delta
 		out.y = min(out.y, settings.max_fall_speed)
 	
 	return out

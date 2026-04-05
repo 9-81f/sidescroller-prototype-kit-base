@@ -1,13 +1,28 @@
 class_name PlayerFallState extends PlayerState
 
 var was_high_momentum := false
+var is_jump_cancelled := false
+
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.FALL)
+	super._ready()
 
 func enter() -> void:
 	player.play_animation(EntityEnums.STATE.FALL)
-	player.anim_player.speed_scale = 2.0
+	
+	player.set_animation_speed_scale(2.0)
+	
+	if player.fsm.previous_state is PlayerJumpState:
+		is_jump_cancelled = (player.fsm.previous_state as PlayerJumpState).is_cancelled
+	else:
+		is_jump_cancelled = false
+	
 	
 func physics_process(delta: float) -> void:
 	if not player: return
+	
+	if player.jump_input_released():
+		is_jump_cancelled = true
 	
 	var move_dir := player.get_direction()
 	
@@ -21,7 +36,7 @@ func physics_process(delta: float) -> void:
 		
 	var applied_speed := move_dir * (player.movement.settings.run_speed if was_high_momentum else player.movement.settings.walk_speed)
 	
-	player.velocity = player.movement.get_next_velocity(player.velocity, applied_speed, delta)
+	player.velocity = player.movement.get_next_velocity(player.velocity, applied_speed, delta, true, is_jump_cancelled)
 	player.movement.set_facing_direction(move_dir)
 
 	if player.jump_input():
@@ -40,4 +55,4 @@ func physics_process(delta: float) -> void:
 			set_state.emit(EntityEnums.STATE.IDLE, self)
 
 func exit() -> void:
-	player.anim_player.speed_scale = 1.0
+	player.reset_animation_speed_scale()
