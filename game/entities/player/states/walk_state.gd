@@ -1,5 +1,9 @@
 class_name PlayerWalkState extends PlayerState
 
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.WALK)
+	super._ready()
+
 func enter() -> void:
 	player.play_animation(EntityEnums.STATE.WALK)
 	

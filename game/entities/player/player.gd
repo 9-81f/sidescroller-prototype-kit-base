@@ -1,17 +1,14 @@
 class_name Player extends CharacterBody2D
 
 #COMPONENTS
-@export_category("Required Components")
-## Enable player movement
-@export var movement: MovementComponent
-## Finite State Machine
-@export var fsm: StateMachineComponent
-
-@export_category("Optional Components")
+@export_category("Components")
 ## Add coyote time for jump movement
 @export var coyote_timer: CoyoteTimeComponent
 ## Add jump buffer for jump movement
 @export var jump_buffer: JumpBufferComponent
+
+@onready var movement: MovementComponent = $MovementComponent
+@onready var fsm: StateMachineComponent = $PlayerStateMachineComponent
 
 var is_freezed: bool = false
 
@@ -45,6 +42,9 @@ func jump_input() -> bool:
 	if movement:
 		return Input.is_action_just_pressed("ui_up") and movement.settings.can_jump
 	return Input.is_action_just_pressed("ui_up")
+
+func jump_input_released() -> bool:
+	return Input.is_action_just_released("ui_up")
 		
 func crouch_input() -> bool:
 	if movement:
@@ -73,6 +73,12 @@ func play_animation(state: EntityEnums.STATE) -> void:
 		EntityEnums.STATE.CROUCH_WALK: anim_player.play("crouch_walk")
 		EntityEnums.STATE.SLIDE: anim_player.play("slide")
 		EntityEnums.STATE.SLIDE_RECOVERY: anim_player.play("slide_recovery")
+
+func set_animation_speed_scale(value: float) -> void:
+	anim_player.speed_scale = value
+	
+func reset_animation_speed_scale() -> void:
+	anim_player.speed_scale = 1.0
 		
 func change_collision_lane(layer_num: int = 2, activate: bool = true) -> void:
 	set_collision_layer_value(layer_num, activate)

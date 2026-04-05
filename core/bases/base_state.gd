@@ -3,7 +3,7 @@ class_name BaseState extends Node
 
 signal set_state(to_state: EntityEnums.STATE, previous_state: BaseState)
 
-@export var key: EntityEnums.STATE = EntityEnums.STATE.IDLE
+var key: EntityEnums.STATE
 
 var fsm: StateMachineComponent = null
 
@@ -13,6 +13,9 @@ func _ready() -> void:
 	else:
 		push_error("Parent State Machine not found!")
 		return
+
+func register_state_key(state_enum: EntityEnums.STATE) -> void:
+	key = state_enum
 
 func enter() -> void: pass
 func exit() -> void: pass

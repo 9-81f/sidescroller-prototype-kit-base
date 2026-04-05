@@ -1,8 +1,12 @@
 class_name PlayerSlideRecoveryState extends PlayerState
 
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.SLIDE_RECOVERY)
+	super._ready()
+
 func enter() -> void:
 	if player.is_on_floor():
-		player.anim_player.speed_scale = 4.0
+		player.set_animation_speed_scale(4.0)
 		player.play_animation(EntityEnums.STATE.SLIDE_RECOVERY)
 		player.movement.stop()
 		await player.anim_player.animation_finished
@@ -11,4 +15,4 @@ func enter() -> void:
 		set_state.emit(EntityEnums.STATE.FALL)
 	
 func exit() -> void:
-	player.anim_player.speed_scale = 1.0
+	player.reset_animation_speed_scale()

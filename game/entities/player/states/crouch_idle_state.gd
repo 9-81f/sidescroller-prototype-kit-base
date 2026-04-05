@@ -1,5 +1,9 @@
 class_name PlayerCrouchIdleState extends PlayerState
 
+func _ready() -> void:
+	register_state_key(EntityEnums.STATE.CROUCH_IDLE)
+	super._ready()
+
 func enter() -> void:
 	player.movement.stop()
 	player.play_animation(EntityEnums.STATE.CROUCH_IDLE)
