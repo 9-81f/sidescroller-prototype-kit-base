@@ -1,6 +1,6 @@
 extends Node
 
-var player: CharacterBody2D = null
+var player: Player = null
 var main_camera: MainCamera = null
 
 func register_player(node: Player) -> void:

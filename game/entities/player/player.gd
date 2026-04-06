@@ -1,5 +1,7 @@
 class_name Player extends CharacterBody2D
 
+##TODO: Remove collision shape skew from animations
+
 #COMPONENTS
 @export_category("Components")
 ## Add coyote time for jump movement
@@ -62,6 +64,9 @@ func freeze() -> void:
 func unfreeze() -> void:
 	is_freezed = false
 
+func spawn_setup() -> void:
+	velocity = Vector2.ZERO
+
 func play_animation(state: EntityEnums.STATE) -> void:
 	match state:
 		EntityEnums.STATE.IDLE: anim_player.play("idle")
@@ -97,4 +102,7 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 func _on_facing(direction: EntityEnums.FACING) -> void:
-	visual_root.scale.x = 1.0 if direction == EntityEnums.FACING.RIGHT else -1.0
+	if direction == EntityEnums.FACING.RIGHT:
+		visual_root.scale.x = 1.0 
+	else:
+		visual_root.scale.x = -1.0 

@@ -5,7 +5,8 @@ func _ready() -> void:
 	super._ready()
 
 func enter() -> void:
-	player.play_animation(EntityEnums.STATE.IDLE)
+	## Uncomment below if player need to change back to idle when body collide with transporter components
+	#player.play_animation(EntityEnums.STATE.IDLE)
 	player.freeze()
 	player.movement.stop()
 
