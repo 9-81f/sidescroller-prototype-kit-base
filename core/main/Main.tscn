@@ -9,8 +9,7 @@
 script = ExtResource("1_80q8g")
 starting_level = ExtResource("2_5pmy8")
 
-[node name="ActiveLevel" type="Node2D" parent="."]
-unique_name_in_owner = true
+[node name="ActiveLevel" type="Node2D" parent="." groups=["level_container"]]
 
 [node name="Player" parent="." instance=ExtResource("2_d4810")]
 

@@ -21,3 +21,5 @@ func physics_process(_delta: float) -> void:
 		if player.crouch_input():
 			set_state.emit(EntityEnums.STATE.CROUCH_IDLE, self)
 			return
+	else:
+		set_state.emit(EntityEnums.STATE.FALL, self)

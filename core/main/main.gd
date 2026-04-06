@@ -1,7 +1,6 @@
 class_name Main extends Node
 
 @export var starting_level: BaseLevelTransporter
-@onready var active_level = %ActiveLevel
 
 func _ready() -> void:
 	if starting_level:
