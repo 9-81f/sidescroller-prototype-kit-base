@@ -1,11 +1,11 @@
 # Godot 2D Platformer Prototype Kit (v0.1.0)
 
-**Stop re-inventing the wheel.** Every 2D prototype starts with the same two hurdles: a reliable character controller and seamless level transitions. This kit provides a rock-solid, production-ready foundation so you can skip the "boilerplate" and focus on crafting your game's unique features.
+**Stop re-inventing the wheel.** Every 2D prototype starts with the same two hurdles: a reliable character controller and seamless level transitions. This kit provides a solid foundation so you can skip the "boilerplate" and focus on crafting your game's unique features.
 
 ---
 
 ## 🧠 The Architecture (The "Why")
-Most Godot tutorials delete the player and UI every time a scene changes. This kit uses a **Persistent Player Architecture**:
+This kit uses a **Persistent Player Architecture** instead of the usual "change_scene_to_file()" approach:
 
 * **Persistence:** The Player and UI live in a "Main" scene and are never deleted. We "transport" the player between levels, preserving stats and state.
 * **Decoupled Loading:** Levels don't know about each other. They only communicate through a "Handshake" using **Markers** and **Resources**.
@@ -39,7 +39,7 @@ Before building, you can define where the game begins.
 ---
 
 ## ✨ Movement & Feel (Modular Components)
-This kit includes a fully-featured **Character Controller** with professional "Game Feel" that you can toggle on or off.
+This kit includes a fully-featured **Character Controller** with "Juices" that you can toggle on or off/opt-in or out.
 
 ### Tuning the Physics
 All movement values are stored in **`BaseMovementSettings`** resources. You can create multiple resources (e.g., `HeavyMovement.tres`, `FastMovement.tres`) and swap them on the `MovementComponent` inspector.
