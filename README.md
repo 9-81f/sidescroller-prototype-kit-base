@@ -83,3 +83,8 @@ To get full **IDE Autocomplete** and avoid generic `CharacterBody2D` casting, fo
 ## ⚠️ Requirements
 * **Godot Version:** 4.2+ (Optimized for 4.5)
 * **Language:** GDScript
+
+---
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
